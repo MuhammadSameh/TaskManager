@@ -14,11 +14,14 @@ const AdminTable = () => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [employees, setEmployees] = useState([]);
   useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = () => {
     fetch("https://localhost:44309/api/Task")
       .then((res) => res.json())
       .then((data) => setTasks(data));
-  }, []);
-
+  }
   useEffect(() => {
     fetch("https://localhost:44309/api/User")
       .then((res) => res.json())
@@ -43,23 +46,30 @@ const AdminTable = () => {
         userId: taskData.userId}),
       })
         .then((res) => res.json())
-        .then((data) => setTasks([...tasks, data]));
+        .then((data) => {setTasks([...tasks, data]);
+        fetchTasks();});
     } else {
       fetch(`https://localhost:44309/api/Task`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({name: taskData.taskName,
-        description: taskData.taskDescription,
-    userId: taskData.userId,
-id: editTaskId}),
+        body: JSON.stringify(
+          {
+            id: editTaskId,
+            name: taskData.taskName,
+            description: taskData.taskDescription,
+            userId: taskData.userId,
+            userName: taskData.userName
+          }
+        ),
       })
         .then((res) => res.json())
         .then((data) => {
-          const editedTasks = [...tasks];
-          editedTasks[editTaskId] = data;
-          setTasks(editedTasks);
+          // const editedTasks = [...tasks];
+          // editedTasks[editTaskId] = data;
+          // setTasks(editedTasks);
+          fetchTasks();
         });
       setEditTaskId(null);
     }
@@ -67,8 +77,9 @@ id: editTaskId}),
   };
 
   const handleEditClick = (index) => {
-    setTaskData(tasks[index]);
-    setEditTaskId(index);
+    const { name, description, userId } = tasks[index];
+    setTaskData({ taskName: name, taskDescription: description, userId });
+    setEditTaskId(tasks[index].id);
   };
 
   const handleDeleteClick = (index) => {

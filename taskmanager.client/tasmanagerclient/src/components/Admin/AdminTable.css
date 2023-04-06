@@ -111,7 +111,8 @@
 .task-form {
     display: flex;
     flex-direction: column;
-    margin: 20px 0;
+    margin: auto;
+    width: 50%;
   }
   
   .task-form label {

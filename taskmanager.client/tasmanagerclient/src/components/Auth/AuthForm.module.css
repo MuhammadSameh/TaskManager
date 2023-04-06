@@ -17,6 +17,11 @@
   .control {
     margin-bottom: 0.5rem;
   }
+
+  form{
+    width: 500px;
+    margin: auto;
+  }
   
   .control label {
     display: block;

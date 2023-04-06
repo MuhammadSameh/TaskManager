@@ -16,7 +16,7 @@ const MainNavigation = () => {
   return (
     <header className={classes.header}>
       <Link to='/'>
-        <div className={classes.logo}>React Auth</div>
+        <div className={classes.logo}>Task Manager</div>
       </Link>
       <nav>
         <ul>
@@ -31,9 +31,7 @@ const MainNavigation = () => {
             <button onClick={logoutHandler}>Logout</button>
           </li>}
 
-          <li>
-          <Button variant="primary">Add-Task</Button>
-          </li>
+          
           
           
         </ul>
