@@ -65,6 +65,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<TaskContext>();
+    await context.Database.MigrateAsync();
     SeedData.SeedUsersAsync(scope.ServiceProvider).GetAwaiter().GetResult();
 }
 

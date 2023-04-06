@@ -68,7 +68,7 @@ const AuthForm = () => {
       }      
       ).then(res => {
         if(res.ok){
-
+          setIsLogin(true)
         } else {
           res.json().then(data => console.log(data))
         }
