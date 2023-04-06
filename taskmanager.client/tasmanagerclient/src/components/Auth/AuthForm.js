@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
-
+import { useState, useRef, useContext } from 'react';
+import AuthContext from '../../store/auth-context'
+import {useNavigate, userNavigate} from 'react-router-dom';
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
@@ -7,6 +8,8 @@ const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const nameInputRef = useRef();
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -16,11 +19,40 @@ const AuthForm = () => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-    const enteredName = nameInputRef.current.value;
+    
 
     if(isLogin){
+      fetch(
+        'https://localhost:44309/api/User/Login',
+      {
+        method: 'Post',
+        body: JSON.stringify({
+          Email: enteredEmail,
+          Password: enteredPassword
+        }),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }      
+      ).then(res => {
+        if(res.ok){
+          res.json().then(data => {
+            console.log(data);
+            authCtx.login(data.token, data.id, data.role);
+            if(data.role == 'admin'){
+              navigate('/Admin')
+            } else{
+              navigate('/Employee')
+            }
+          })
+          
+        } else {
+          res.json().then(data => console.log(data))
+        }
+      });
 
     } else {
+      const enteredName = nameInputRef.current.value;
       fetch(
         'https://localhost:44309/api/User/Register',
       {
@@ -43,6 +75,8 @@ const AuthForm = () => {
       });
     }
   }
+
+  
 
   return (
     <section className={classes.auth}>

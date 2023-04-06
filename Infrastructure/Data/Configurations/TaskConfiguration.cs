@@ -13,9 +13,7 @@ namespace Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasMany(u => u.Tasks)
-                .WithOne()
-                .HasForeignKey(t => t.AssignedTo);
+            
         }
     }
 }

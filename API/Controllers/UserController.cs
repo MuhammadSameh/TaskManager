@@ -3,6 +3,7 @@ using API.Helpers;
 using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -69,6 +70,13 @@ namespace API.Controllers
                 );
 
 
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return Ok(users);
         }
 
     }

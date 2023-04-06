@@ -1,6 +1,9 @@
 using API.Helpers;
+using API.Mapping;
 using Core.Entities;
+using Core.Repositories;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
