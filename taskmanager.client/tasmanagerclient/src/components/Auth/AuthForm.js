@@ -1,13 +1,27 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    if(isLogin){
+
+    } else {
+      
+    }
+  }
 
   return (
     <section className={classes.auth}>
@@ -15,11 +29,11 @@ const AuthForm = () => {
       <form>
         <div className={classes.control}>
           <label htmlFor='email'>Your Email</label>
-          <input type='email' id='email' required />
+          <input type='email' id='email' required ref={emailInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor='password'>Your Password</label>
-          <input type='password' id='password' required />
+          <input type='password' id='password' required ref={passwordInputRef} />
         </div>
         <div className={classes.actions}>
           <button>{isLogin ? 'Login' : 'Create Account'}</button>

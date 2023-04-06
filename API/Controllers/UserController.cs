@@ -39,7 +39,8 @@ namespace API.Controllers
             }
             await _userManager.AddClaimsAsync(customer, new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, customer.Id)
+                new Claim(ClaimTypes.NameIdentifier, customer.Id),
+                new Claim(ClaimTypes.Role, "Employee")
             });
 
             return Ok(new { id = customer.Id });
