@@ -61,10 +61,11 @@ namespace API.Controllers
             var securityToken = TokenHelper.GenerateToken(claims, DateTime.Now.AddDays(1), key);
             var tokenHandler = new JwtSecurityTokenHandler();
             var id = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
 
 
             return Ok(
-                new { Token = tokenHandler.WriteToken(securityToken), ExpirtyDate = securityToken.ValidTo , Id = id}
+                new { Token = tokenHandler.WriteToken(securityToken), ExpirtyDate = securityToken.ValidTo , Id = id, Role = role}
                 );
 
 

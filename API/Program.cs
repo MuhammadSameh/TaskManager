@@ -30,6 +30,15 @@ builder.Services.AddIdentity<User, IdentityRole>(
 
                      ).AddEntityFrameworkStores<TaskContext>();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    });
+}
+);
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = "User";
@@ -62,6 +71,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 

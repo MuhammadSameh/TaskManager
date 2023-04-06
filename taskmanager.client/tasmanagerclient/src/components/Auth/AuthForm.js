@@ -6,6 +6,7 @@ const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const nameInputRef = useRef();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -15,18 +16,43 @@ const AuthForm = () => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
+    const enteredName = nameInputRef.current.value;
 
     if(isLogin){
 
     } else {
-      
+      fetch(
+        'https://localhost:44309/api/User/Register',
+      {
+        method: 'Post',
+        body: JSON.stringify({
+          UserName: enteredName,
+          Email: enteredEmail,
+          Password: enteredPassword
+        }),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }      
+      ).then(res => {
+        if(res.ok){
+
+        } else {
+          res.json().then(data => console.log(data))
+        }
+      });
     }
   }
 
   return (
     <section className={classes.auth}>
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
-      <form>
+      <form onSubmit={submitHandler}>
+        {!isLogin && <div className={classes.control}>
+          <label htmlFor='name'>Your Name</label>
+          <input type='text' id='name' required ref={nameInputRef} />
+        </div>}
+        
         <div className={classes.control}>
           <label htmlFor='email'>Your Email</label>
           <input type='email' id='email' required ref={emailInputRef} />
