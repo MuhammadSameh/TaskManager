@@ -21,6 +21,7 @@ export const AuthContextProvider = (props) => {
         setId(id);
         setRole(role);
         localStorage.setItem('token', token);
+        localStorage.setItem('id', id);
     };
 
     const logoutHandler = () => {

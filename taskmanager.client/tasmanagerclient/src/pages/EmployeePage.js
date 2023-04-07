@@ -1,10 +1,9 @@
+import TasksTable from "../components/Employee/Employee";
+
+
 const EmployeePage = () => {
     return (
-        <div>
-            <h2>
-                This is Employee Page
-            </h2>
-        </div>
+        <TasksTable></TasksTable>
     )
 }
 

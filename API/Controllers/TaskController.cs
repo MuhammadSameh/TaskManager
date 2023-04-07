@@ -74,5 +74,14 @@ namespace API.Controllers
                 
             }
         }
+
+        [HttpGet]
+        [Route("/UserTasks")]
+        public async Task<ActionResult> GetTaskForUser(string userId)
+        {
+           var tasks = await _taskRepository.GetByUserIdAsync(userId);
+           var tasksToRead = _mapper.Map<List<TaskToReadDto>>(tasks);
+            return Ok(tasksToRead);
+        }
     }
 }
