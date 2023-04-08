@@ -17,14 +17,19 @@ const TaskTable = () => {
       .catch(error => console.log(error));
   }, []);
 
-  const handleStatusChange = (id, status) => {
+  const handleStatusChange = (id, status, name, description, userId) => {
     fetch(`https://localhost:44309/api/Task`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ id: id,
-        status: status})
+      body: JSON.stringify({
+        id: id,
+        status: status,
+        name: name,
+        description: description,
+        userId: userId
+      })
     })
       .then(res => res.json())
       .then(data => {
@@ -64,20 +69,32 @@ const TaskTable = () => {
               <td>
                 {task.status === 0 && (
                   <>
-                    <button onClick={() => handleStatusChange(task.id, 2)}>Done</button>
-                    <button onClick={() => handleStatusChange(task.id, 1)}>In-Progress</button>
+                    <button onClick={() => handleStatusChange(task.id, 2, task.name,
+                                                              task.description,
+                      task.userId)}>Done</button>
+                    <button onClick={() => handleStatusChange(task.id, 1, task.name,
+                                                              task.description,
+                      task.userId)}>In-Progress</button>
                   </>
                 )}
                 {task.status === 1 && (
                   <>
-                    <button onClick={() => handleStatusChange(task.id, 2)}>Done</button>
-                    <button onClick={() => handleStatusChange(task.id, 0)}>Processing</button>
+                    <button onClick={() => handleStatusChange(task.id, 2, task.name,
+                                                              task.description,
+                      task.userId)}>Done</button>
+                    <button onClick={() => handleStatusChange(task.id, 0, task.name,
+                                                              task.description,
+                      task.userId)}>Processing</button>
                   </>
                 )}
                 {task.status === 2 && (
                     <>
-                    <button onClick={() => handleStatusChange(task.id, 1)}>In-Progress</button>
-                    <button onClick={() => handleStatusChange(task.id, 0)}>Processing</button>
+                    <button onClick={() => handleStatusChange(task.id, 1, task.name,
+                                                              task.description,
+                      task.userId)}>In-Progress</button>
+                    <button onClick={() => handleStatusChange(task.id, 0, task.name,
+                                                              task.description,
+                      task.userId)}>Processing</button>
                     </>
                   
                   
